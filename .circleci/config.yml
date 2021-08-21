@@ -16,17 +16,24 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - run: echo world
+  build:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+            name: "echo an env var that is part of our project"
+            command: |
+              echo $MY_ENV_VAR
+
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      #- welcome/run
+      - welcome/run
       - print_hello
       - print_world:
           requires:
               - print_hello
-      - run:
-          name: "echo an env var that is part of our project"
-          command: |
-            echo $MY_ENV_VAR
+      - build
