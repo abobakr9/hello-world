@@ -26,8 +26,3 @@ workflows:
       - print_world:
           requires:
               - print_hello
-      - run:
-          name: "echo an env var that is part of our project"
-          command: |
-            echo $MY_ENV_VAR
-      
