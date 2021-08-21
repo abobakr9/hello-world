@@ -21,8 +21,14 @@ workflows:
   welcome:
     # Run the welcome/run job in its own container
     jobs:
+      - checkout
       - welcome/run
       - print_hello
       - print_world:
           requires:
               - print_hello
+      - run:
+          name: "echo an env var that is part of our project"
+          command: |
+            echo $MY_ENV_VAR
+      
