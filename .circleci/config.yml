@@ -11,11 +11,20 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
 jobs:
-  myJob:
+  my_job:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - print_pipeline_id
+      - run: return 1
+      - run:
+          name: happen on failure
+          command: echo "Hello Error!"
+          when: on_fail
+  # myJob:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - print_pipeline_id
   # save_hello_world_output:
   #   docker:
   #     - image: circleci/node:13.8.0
@@ -58,7 +67,7 @@ workflows:
   my_workflow:
     # Run the welcome/run job in its own container
     jobs:
-      - myJob
+      - my_job
       # - save_hello_world_output
       # - print_output_file:
       #     requires:
