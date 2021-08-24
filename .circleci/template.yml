@@ -16,7 +16,7 @@ Resources:
           ToPort: '22'
           CidrIp: 0.0.0.0/0
 
-  NewRelicInfrastructure-IntegrationsRole:
+  NewRelicInfrastructureIntegrationsRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -29,10 +29,10 @@ Resources:
 
       Path: '/'
       ManagedPolicyArns: arn:aws:iam::aws:policy/ReadOnlyAccess
-      RoleName: NewRelicInfrastructure-Integrations2
+      RoleName: NewRelicInfrastructureIntegrations2
   ProfileWithRolesForOurApp: 
       Type: AWS::IAM::InstanceProfile
       Properties: 
           Path: "/"
           Roles: 
-              - !Ref NewRelicInfrastructure-IntegrationsRole
+              - !Ref NewRelicInfrastructureIntegrationsRole
