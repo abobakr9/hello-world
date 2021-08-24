@@ -11,7 +11,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/template.yml \
-              --stack-name mystack --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" --region us-east-1
+              --stack-name mystack 
 workflows:
   my_workflow:
     jobs:

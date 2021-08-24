@@ -1,46 +1,18 @@
 Resources:
-  Ec2Instance:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-      SecurityGroups:
-        - !Ref InstanceSecurityGroup
-      KeyName: udacity
-      ImageId: 'ami-09e67e426f25ce0d7' # you may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
-      IamInstanceProfile: !Ref RootInstanceProfile
   InstanceSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH access via port 22
+      GroupDescription: Allow ssh port 22
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: '22'
-          ToPort: '22'
+          FromPort: 22
+          ToPort: 22
           CidrIp: 0.0.0.0/0
-
-  RootRole:
-    Type: 'AWS::IAM::Role'
+  EC2Instance:
+    Type: AWS::EC2::Instance
     Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - ec2.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
-      Path: /
-      Policies:
-        - PolicyName: root
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action: '*'
-                Resource: '*'
-  RootInstanceProfile:
-    Type: 'AWS::IAM::InstanceProfile'
-    Properties:
-      Path: /
-      Roles:
-        - !Ref RootRole
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: InstanceSecurityGroup
+      KeyName: udacity
+      ImageId: ami-09e67e426f25ce0d7
