@@ -29,7 +29,8 @@ Resources:
                 - "sts:AssumeRole"
 
       Path: '/'
-      ManagedPolicyArns: "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      ManagedPolicyArns: 
+          - "arn:aws:iam::aws:policy/ReadOnlyAccess"
       RoleName: "NewRelicInfrastructureIntegrations2"
   ProfileWithRolesForOurApp: 
       Type: AWS::IAM::InstanceProfile
