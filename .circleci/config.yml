@@ -15,10 +15,10 @@ jobs:
                   else
                   return 1
                   fi
-    workflows:
-      my_workflow:
-        jobs:
-          - smoke_test
+workflows:
+  my_workflow:
+    jobs:
+      - smoke_test
       
 # jobs:
 #   configure_infrastructure:
