@@ -25,11 +25,12 @@ Resources:
           - Effect: "Allow"
             Principal:
               AWS: 11111111
-            Action: sts:AssumeRole
+            Action: 
+                - "sts:AssumeRole"
 
       Path: '/'
-      ManagedPolicyArns: arn:aws:iam::aws:policy/ReadOnlyAccess
-      RoleName: NewRelicInfrastructureIntegrations2
+      ManagedPolicyArns: "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      RoleName: "NewRelicInfrastructureIntegrations2"
   ProfileWithRolesForOurApp: 
       Type: AWS::IAM::InstanceProfile
       Properties: 
