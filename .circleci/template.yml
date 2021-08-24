@@ -15,3 +15,20 @@ Resources:
           FromPort: '22'
           ToPort: '22'
           CidrIp: 0.0.0.0/0
+
+  NewRelicInfrastructure-IntegrationsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            AWS: 11111111
+          Action: sts:AssumeRole
+          Condition:
+            StringEquals:
+            sts:ExternalId: '11111'
+      Path: '/'
+      ManagedPolicyArns: arn:aws:iam::aws:policy/ReadOnlyAccess
+      RoleName: NewRelicInfrastructure-Integrations2
