@@ -22,13 +22,11 @@ Resources:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
-          Effect: Allow
-          Principal:
-            AWS: 11111111
-          Action: sts:AssumeRole
-          Condition:
-            StringEquals:
-            sts:ExternalId: '11111'
+          - Effect: "Allow"
+            Principal:
+              AWS: 11111111
+            Action: sts:AssumeRole
+
       Path: '/'
       ManagedPolicyArns: arn:aws:iam::aws:policy/ReadOnlyAccess
       RoleName: NewRelicInfrastructure-Integrations2
