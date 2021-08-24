@@ -5,7 +5,7 @@ Resources:
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       KeyName: udacity
-      ImageId: 'ami-0c2b8ca1dad447f8a' # you may need   to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
+      ImageId: 'ami-09e67e426f25ce0d7' # you may need   to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -32,3 +32,9 @@ Resources:
       Path: '/'
       ManagedPolicyArns: arn:aws:iam::aws:policy/ReadOnlyAccess
       RoleName: NewRelicInfrastructure-Integrations2
+  ProfileWithRolesForOurApp: 
+      Type: AWS::IAM::InstanceProfile
+      Properties: 
+          Path: "/"
+          Roles: 
+              - !Ref NewRelicInfrastructure-IntegrationsRole
