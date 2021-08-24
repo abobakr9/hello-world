@@ -1,30 +1,50 @@
 version: 2.1
-
 jobs:
-  configure_infrastructure:
+  smoke_test:
     docker:
-      - image: python:3.7-alpine3.11
+       - image: alpine:latest
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints: ["76:d3:26:61:52:59:fc:1b:c0:ee:de:51:d7:4c:c4:3f"] 
+      - run: apk add --update curl
       - run:
-          name: Install dependencies
+          name : smoke test
           command: |
-            apk add --update ansible # install the dependencies needed for your playbook
+                  URL="https://blog.udacity.com/"
+                  if curl -s --head ${URL} # test if blog.udacity. com exists
+                  then
+                  return 0
+                  else
+                  return 1
+                  fi
+    workflows:
+      my_workflow:
+        jobs:
+          - smoke_test
+      
+# jobs:
+#   configure_infrastructure:
+#     docker:
+#       - image: python:3.7-alpine3.11
+#     steps:
+#       - checkout
+#       - add_ssh_keys:
+#           fingerprints: ["76:d3:26:61:52:59:fc:1b:c0:ee:de:51:d7:4c:c4:3f"] 
+#       - run:
+#           name: Install dependencies
+#           command: |
+#             apk add --update ansible # install the dependencies needed for your playbook
 
 
-            export ANSIBLE_HOST_KEY_CHECKING=False
-      - run:
-          name: Configure server
-          command: |
-            export ANSIBLE_HOST_KEY_CHECKING=False
-            ansible-playbook -i inventory.txt playbook.yml
+#             export ANSIBLE_HOST_KEY_CHECKING=False
+#       - run:
+#           name: Configure server
+#           command: |
+#             export ANSIBLE_HOST_KEY_CHECKING=False
+#             ansible-playbook -i inventory.txt playbook.yml
 
-workflows:
-  my_workflow:
-    jobs:
-      - configure_infrastructure
+# workflows:
+#   my_workflow:
+#     jobs:
+#       - configure_infrastructure
 # jobs:
 #   create_infrastructure:
 #     docker:
