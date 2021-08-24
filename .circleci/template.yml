@@ -6,7 +6,7 @@ Resources:
         - !Ref InstanceSecurityGroup
       KeyName: udacity
       ImageId: 'ami-09e67e426f25ce0d7' # you may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
-      IamInstanceProfile: !Ref ProfileWithRolesForOurApp
+      IamInstanceProfile: !Ref RootInstanceProfile
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -17,26 +17,30 @@ Resources:
           ToPort: '22'
           CidrIp: 0.0.0.0/0
 
-  NewRelicInfrastructureIntegrationsRole:
-    Type: AWS::IAM::Role
+  RootRole:
+    Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
-          - Effect: "Allow"
+          - Effect: Allow
             Principal:
-                Service: 
-                  - "ec2.amazonaws.com"
-            Action: 
-                - "sts:AssumeRole"
-
-      Path: '/'
-      ManagedPolicyArns: 
-          - "arn:aws:iam::aws:policy/ReadOnlyAccess"
-      RoleName: "NewRelicInfrastructureIntegrations2"
-  ProfileWithRolesForOurApp: 
-      Type: AWS::IAM::InstanceProfile
-      Properties: 
-          Path: "/"
-          Roles: 
-              - !Ref NewRelicInfrastructureIntegrationsRole
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+  RootInstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Path: /
+      Roles:
+        - !Ref RootRole
