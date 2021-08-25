@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   save_hello_world_output: #job name
     docker: # it uses the docker executor
@@ -7,33 +6,51 @@ jobs:
     steps:
       - run: yum install -y tar
       - run: yum install -y gzip
-      - run: echo "hello world" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
+      - run: |
+             echo ${CIRCLE_WORKFLOW_ID} > ~/output.txt
+             cat ~/output.txt
 
-  print_output_file:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run:
-          name: print something
-          command: |
-            echo "hello world" > ~/output.txt
-            cat ~/output.txt
-            OldPipelineID=$(cat ~/output.txt)
-            echo $OldPipelineID
-            echo "$OldPipelineID"
-            echo "${OldPipelineID}"
+
 workflows:
   my_workflow:
     jobs:
       - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
+
+
+# jobs:
+#   save_hello_world_output: #job name
+#     docker: # it uses the docker executor
+#       - image: amazon/aws-cli
+#     steps:
+#       - run: yum install -y tar
+#       - run: yum install -y gzip
+#       - run: echo "hello world" > ~/output.txt
+#       - persist_to_workspace:
+#           root: ~/
+#           paths:
+#             - output.txt
+
+#   print_output_file:
+#     docker:
+#       - image: amazon/aws-cli
+#     steps:
+#       - checkout
+#       - run:
+#           name: print something
+#           command: |
+#             echo "hello world" > ~/output.txt
+#             cat ~/output.txt
+#             OldPipelineID=$(cat ~/output.txt)
+#             echo $OldPipelineID
+#             echo "$OldPipelineID"
+#             echo "${OldPipelineID}"
+# workflows:
+#   my_workflow:
+#     jobs:
+#       - save_hello_world_output
+#       - print_output_file:
+#           requires:
+#             - save_hello_world_output
 # jobs:
 #   smoke_test:
 #     docker:
