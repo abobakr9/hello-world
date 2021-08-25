@@ -65,9 +65,9 @@ jobs:
               --template-file .circleci/template.yml \
               --stack-name prod-${CIRCLE_WORKFLOW_ID}
       - run: return 1
-      - destroy_environment
-        when: on_fail
-        
+      - destroy_environment:
+          when: on_fail
+
 workflows:
   my_workflow:
     jobs:
