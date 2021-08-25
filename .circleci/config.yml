@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   save_hello_world_output: #job name
-    docker: # it uses the docker executor
+    docker: # it uses the docker   executor
       - image: amazon/aws-cli
     steps:
       - run: yum install -y tar
